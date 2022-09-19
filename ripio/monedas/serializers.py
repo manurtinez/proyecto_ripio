@@ -35,7 +35,7 @@ class BalanceSerializer(serializers.ModelSerializer):
 class TransferBalanceSerializer(serializers.Serializer):
     usuario_destino = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
     moneda = serializers.IntegerField()
-    cantidad = serializers.IntegerField()
+    cantidad = serializers.IntegerField(min_value=0.1)
 
 
 class TransferenciaSerializer(serializers.ModelSerializer):

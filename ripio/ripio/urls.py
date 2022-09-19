@@ -17,10 +17,11 @@ from django.contrib import admin
 from django.urls import path, include
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view as swagger_get_schema_view
-from rest_framework import routers
+from rest_framework import routers, permissions
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from monedas import views
+from monedas.views import validate_token
 
 # Generar rutas para las vistas
 router = routers.DefaultRouter()
@@ -36,6 +37,7 @@ schema_view = swagger_get_schema_view(
         description="API docs",
     ),
     public=True,
+    permission_classes=[permissions.AllowAny],
 )
 
 urlpatterns = [
@@ -48,4 +50,5 @@ urlpatterns = [
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name="swagger-schema"),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/token/validate/', validate_token, name='token_verify'),
 ]

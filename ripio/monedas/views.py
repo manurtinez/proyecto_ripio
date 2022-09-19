@@ -1,11 +1,17 @@
 from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
 from django.db import transaction
+from django.views.decorators.csrf import csrf_exempt
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, views, status, mixins
-from rest_framework.decorators import action
+from rest_framework.authentication import get_authorization_header
+from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework_simplejwt.exceptions import InvalidToken
+
+JWT_authenticator = JWTAuthentication()
 
 from monedas.models import Moneda, MonedaUsuario, Transferencia
 from monedas.permissions import BasicUserPermission
@@ -74,6 +80,15 @@ class TransferenciaViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('usuario_origen', 'usuario_destino', 'moneda')
 
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def validate_token(request):
+    try:
+        JWT_authenticator.get_validated_token(get_authorization_header(request).decode('utf-8').split(' ')[1])
+        return Response(status=status.HTTP_200_OK)
+    except InvalidToken:
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 # class LoginView(views.APIView):
 #     permission_classes = (AllowAny,)

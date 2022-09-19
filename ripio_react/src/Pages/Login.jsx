@@ -14,10 +14,14 @@ const Login = () => {
                 'Content-Type': 'application/json'
             }
         }).then(async (response) => {
-            const data = await response.json();
-            localStorage.setItem('token', data.access);
-            localStorage.setItem('refresh', data.refresh);
-            navigate('/home');
+            try {
+                const data = await response.json();
+                localStorage.setItem('token', data.access);
+                localStorage.setItem('refresh', data.refresh);
+                navigate('/');
+            } catch (e) {
+                alert("credenciales incorrectas")
+            }
         })
     }
 

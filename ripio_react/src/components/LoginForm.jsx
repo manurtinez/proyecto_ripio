@@ -4,7 +4,6 @@ import {Box, Button, Stack, Typography} from "@mui/material";
 
 // eslint-disable-next-line react/prop-types
 const LoginForm = ({handleSuccess}) => {
-    console.log(handleSuccess)
     return (
         <Box p={10}>
             <FormContainer
