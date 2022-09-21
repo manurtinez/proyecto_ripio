@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {FormContainer, TextFieldElement} from "react-hook-form-mui";
 import {Box, Button, Stack, Typography} from "@mui/material";
 import Api from "../Api";
@@ -6,6 +6,18 @@ import {useNavigate} from "react-router-dom";
 
 const AgregarMoneda = () => {
     const navigate = useNavigate()
+    const [loaded, setLoaded] = useState(false)
+
+
+    useEffect(() => {
+        Api.fetch('/api/token/validate/').then((response) => {
+            if (!response) {
+                navigate('/login');
+            } else {
+                setLoaded(true)
+            }
+        })
+    }, [])
 
     const handleSubmit = (data) => {
         Api.fetch('/monedas/', {
@@ -23,7 +35,8 @@ const AgregarMoneda = () => {
     }
 
     return (
-
+        <>
+        {!loaded ? <h1>Cargando...</h1> :
         <Box p={10} style={{maxWidth: '50%'}}>
             <FormContainer
                 className="login-form"
@@ -37,7 +50,7 @@ const AgregarMoneda = () => {
                     <Button variant={"contained"} type="submit">Aceptar</Button>
                 </Stack>
             </FormContainer>
-        </Box>
+        </Box>}</>
     )
 }
 
