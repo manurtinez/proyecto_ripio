@@ -58,7 +58,7 @@ def create_wallets(sender, instance, **kwargs):
     monedas = Moneda.objects.all()
     with transaction.atomic():
         for m in monedas:
-            MonedaUsuario.objects.create(moneda=m, usuario=instance, cantidad=0)
+            MonedaUsuario.objects.create(moneda=m, usuario=instance, cantidad=5)
 
 @receiver(post_save, sender=Moneda)
 def create_wallets(sender, instance, **kwargs):
@@ -71,4 +71,4 @@ def create_wallets(sender, instance, **kwargs):
     users = User.objects.all()
     with transaction.atomic():
         for u in users:
-            MonedaUsuario.objects.create(moneda=instance, usuario=u, cantidad=0)
+            MonedaUsuario.objects.create(moneda=instance, usuario=u, cantidad=5)
