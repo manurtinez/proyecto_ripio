@@ -5,6 +5,7 @@ import Login from "./Pages/Login";
 import Layout from "./Pages/Layout";
 import Home from "./Pages/Home";
 import Transfer from "./Pages/Transfer";
+import AgregarMoneda from './Pages/AgregarMoneda';
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
                         <Route index path="/" element={<Home />} />
                         <Route path="/login" element={<Login/>}/>
                         <Route path="/transfer" element={<Transfer/>}/>
+                        <Route path="/add-moneda" element={<AgregarMoneda/>}/>
                     </Route>
                 </Routes>
             </BrowserRouter>

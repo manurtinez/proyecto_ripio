@@ -13,9 +13,11 @@ const Api = {
                     return false;
                 }
                 console.error(response)
-                return response;
+                const data = await response.json()
+                alert(Object.entries(data).map(([key, value]) => `${key}: ${value}`))
+            } else {
+                return response
             }
-            return response
         } catch (e) {
             console.log(e)
         }

@@ -9,7 +9,12 @@ const Layout = () => {
     }, {
         name: 'Transferir',
         path: '/transfer'
-    }]
+    },
+    {
+        name: "Agregar Moneda",
+        path: '/add-moneda'
+    }
+]
 
 
     return (

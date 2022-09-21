@@ -50,7 +50,8 @@ class Transferencia(models.Model):
 @receiver(post_save, sender=User)
 def create_wallets(sender, instance, **kwargs):
     """
-    Cada vez que se crea un usuario, inicializar wallets con balance 0 para cada moneda
+    Cada vez que se crea un usuario, inicializar wallets con balance 5 para cada moneda
+    NOTA: balance 5 es solo para probar, en un ambiente real deberia ser 0
     """
     if not kwargs.get('created', False):
         return
@@ -58,3 +59,16 @@ def create_wallets(sender, instance, **kwargs):
     with transaction.atomic():
         for m in monedas:
             MonedaUsuario.objects.create(moneda=m, usuario=instance, cantidad=0)
+
+@receiver(post_save, sender=Moneda)
+def create_wallets(sender, instance, **kwargs):
+    """
+    Cada vez que se crea una moneda, inicializar wallets con balance 5 para cada usuario
+    NOTA: balance 5 a modo de ejemplo, en un ambiente real debería ser 0
+    """
+    if not kwargs.get('created', False):
+        return
+    users = User.objects.all()
+    with transaction.atomic():
+        for u in users:
+            MonedaUsuario.objects.create(moneda=instance, usuario=u, cantidad=0)

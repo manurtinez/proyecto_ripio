@@ -39,14 +39,9 @@ const Transfer = () => {
                     'Content-Type': 'application/json'
                 }
             }).then(async (response) => {
-                if (response.ok) {
-    
+                if (response) {
                     alert("Transferencia realizada con exito")
                     navigate('/')
-                } else {
-                    const data = await response.json()
-                    console.log("holaa ", data)
-                    alert(data[0])
                 }
             })
         }
