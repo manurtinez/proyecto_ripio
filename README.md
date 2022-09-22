@@ -9,6 +9,7 @@
 
 ### Pasos para levantar el proyecto
 - Tener docker / docker-compose instalado
+- Crear un archivo .env en el directorio /ripio/ripio (al mismo nivel que settings.py), con el mismo contenido que el archivo `.env.example` y una clave adicional `SECRET_KEY=<cualquier_cosa>`
 - Situar una terminal en la raiz del proyecto (al nivel de docker-compose.yml)
 - Ejecutar el comando *docker-compose up --build* (o *docker-compose up* si es la primera vez)
 - Ejecutar comando *docker exec ripio_backend python manage.py migrate* para correr las migraciones

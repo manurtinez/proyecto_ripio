@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import environ
+
+# Inicializar variables de entorno
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-e6*6_4_c4m73e-zmt=m=^+8q#w1m6upt82*w@vcv*i#z=8%ubk'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -109,10 +114,10 @@ DATABASES = {
     'default': {
         # TODO cambiar por variables env
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'djangodb',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'postgresdb',
+        'NAME': env('DATABASE_NAME'),
+        'USER': env('DATABASE_USER'),
+        'PASSWORD': env('DATABASE_PASS'),
+        'HOST': env('DATABASE_HOST'),
         # 'HOST': 'localhost',
         'PORT': '5432',
     }
